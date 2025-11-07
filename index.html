@@ -13,13 +13,17 @@
 			<h1>投稿デモ</h1>
 		</header>
 
-		<button id="postButton" aria-label="新しい投稿を追加">＋</button>
-
 		<main>
 			<section id="posts" aria-live="polite">
 				<!-- 投稿がここに追加されます -->
 			</section>
+
+			<!-- post button placed immediately below the posts section -->
+			<button id="postButton" aria-label="新しい投稿を追加">＋</button>
 		</main>
+
+		<!-- reload button placed bottom-left -->
+		<button id="reloadButton" aria-label="ページを再読み込み">⟳</button>
 
 		<!-- モーダル（initially hidden） -->
 		<div id="modalOverlay" class="hidden" aria-hidden="true" hidden>

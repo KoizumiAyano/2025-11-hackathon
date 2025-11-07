@@ -22,6 +22,13 @@ body {
 	overflow: hidden; /* 固定表示・スクロール禁止 */
 }
 
+/* place header content inside the inner frame */
+header {
+	padding-left: 20px; /* move title right so it's inside the frame */
+	padding-top: 12px;
+}
+header h1 { margin: 0; }
+
 button { cursor: pointer; }
 
 .hidden { display: none; }
@@ -50,7 +57,7 @@ button { cursor: pointer; }
 
 /* Each post wrapper will be absolutely positioned within #posts */
 .post { position: absolute; }
-.post-image { display:block; max-width:100%; height:auto; border-radius:8px; border: 2px solid rgba(255,255,255,0.06); box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+.post-image { display:block; max-width:100%; height:auto; border-radius:8px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
 
 /* view modal styling */
 #viewOverlay { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.7); z-index: 1200; }
@@ -86,15 +93,35 @@ button { cursor: pointer; }
 	justify-content: center;
 	border: none;
 	box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+	/* place inline under #posts, with slight left margin so it's inside the frame */
+	position: static;
+	margin: 12px 0 0 20px;
+	z-index: 1100;
+}
+
+#reloadButton {
+	/* match FAB style */
+	width: 64px;
+	height: 64px;
+	border-radius: 50%;
+	background: royalblue;
+	color: #000;
+	font-size: 32px;
+	line-height: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	box-shadow: 0 6px 18px rgba(0,0,0,0.4);
 	position: fixed;
-	right: 24px;
+	right: 24px; /* bottom-right */
 	bottom: 24px;
 	z-index: 1100;
 }
 
-#postButton:focus { outline: 3px solid rgba(19,102,214,0.18); }
+#reloadButton:focus { outline: 3px solid rgba(19,102,214,0.18); }
 
-/* Responsive tweaks for small screens */
+#postButton:focus, #reloadButton:focus { outline: 3px solid rgba(19,102,214,0.18); }
 @media (max-width: 600px) {
 	body { padding: 12px; }
 	header h1 { font-size: 18px; }
@@ -102,9 +129,9 @@ button { cursor: pointer; }
 		width: 56px;
 		height: 56px;
 		font-size: 28px;
-		right: 16px;
-		bottom: 16px;
+		margin-left: 12px;
 	}
+	#reloadButton { right: 16px; bottom: 16px; width:56px; height:56px; font-size:28px; }
 	#modal {
 		width: calc(100% - 32px);
 		max-width: none;
