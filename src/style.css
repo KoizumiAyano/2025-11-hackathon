@@ -13,20 +13,51 @@
 body {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 	line-height: 1.4;
-	padding: 24px;
+	margin: 0;
+	padding: 0; /* make the stage flush with the frame */
+	min-height: 100vh;
+	height: 100vh;
 	background: #000; /* page background black */
 	color: var(--muted-yellow); /* main text color set to bright yellow */
+	overflow: hidden; /* 固定表示・スクロール禁止 */
 }
 
 button { cursor: pointer; }
 
 .hidden { display: none; }
 
-/* Ensure modal is hidden when using the hidden attribute or the .hidden class even
-	though #modalOverlay sets display:flex (ID selector has higher specificity). */
-#modalOverlay.hidden, #modalOverlay[hidden] { display: none; }
+/* Ensure overlays are hidden when using the hidden attribute or the .hidden class.
+   Use a selector that targets both overlays so ID-level display:flex rules don't override it. */
+#modalOverlay.hidden, #modalOverlay[hidden],
+#viewOverlay.hidden, #viewOverlay[hidden] {
+	display: none !important;
+}
 
-#posts { max-width: 700px; margin-top: 16px; }
+.post { background: transparent; border: none; padding: 0; }
+
+/* posts stage: fixed full-area inside the inner frame (no scrolling). Images will be
+   absolutely positioned inside this container with random left/top coordinates. */
+#posts {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	bottom: 10px;
+	left: 10px;
+	pointer-events: auto;
+	overflow: hidden; /* ensure off-stage images are clipped */
+	z-index: 1;
+}
+
+/* Each post wrapper will be absolutely positioned within #posts */
+.post { position: absolute; }
+.post-image { display:block; max-width:100%; height:auto; border-radius:8px; border: 2px solid rgba(255,255,255,0.06); box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+
+/* view modal styling */
+#viewOverlay { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.7); z-index: 1200; }
+#viewModal { background: #111; color: var(--muted-yellow); padding: 18px; border-radius: 8px; max-width: 520px; width: calc(100% - 40px); box-shadow: 0 10px 30px rgba(0,0,0,0.6); border: 1px solid rgba(255,215,74,0.12); }
+#viewModal p { margin: 8px 0; }
+#viewModal img { max-width: 100%; border-radius: 6px; display:block; margin-bottom: 12px; }
+
 
 /* Floating action button style for #postButton */
 #postButton {
@@ -75,25 +106,6 @@ button { cursor: pointer; }
 
 /* Ensure modal is scrollable on very small devices */
 #modal { box-sizing: border-box; }
-
-.post {
-	border: 1px solid #e0e0e0;
-	padding: 12px;
-	border-radius: 6px;
-	margin-bottom: 12px;
-	background: #fafafa;
-}
-
-.post .meta {
-	font-size: 13px;
-	color: #555;
-	margin-bottom: 8px;
-}
-
-.post .rating {
-	font-weight: 600;
-	color: var(--accent);
-}
 
 /* modal */
 #modalOverlay {

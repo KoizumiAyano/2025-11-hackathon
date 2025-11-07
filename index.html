@@ -54,6 +54,21 @@
 				</form>
 			</div>
 		</div>
-	</body>
+
+		<!-- 投稿表示用ビュー（画像クリックで内容を表示） -->
+		<div id="viewOverlay" class="hidden" aria-hidden="true" hidden>
+			<div id="viewModal" role="dialog" aria-modal="true" aria-labelledby="viewTitle">
+				<h2 id="viewTitle">投稿内容</h2>
+				<div id="viewContent">
+					<p><strong id="viewNick"></strong></p>
+					<p id="viewBodyText"></p>
+					<p>評価: <span id="viewRating"></span></p>
+				</div>
+				<div class="buttons">
+					<button type="button" id="viewClose">閉じる</button>
+				</div>
+			</div>
+		</div>
+		</body>
 </html>
 
