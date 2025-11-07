@@ -1,0 +1,151 @@
+:root {
+	--overlay-bg: rgba(0,0,0,0.6);
+	--modal-bg: #0f0f0f;
+	--accent: #1366d6;
+	/* brighter yellow for main text and frame */
+	--muted-yellow: #ffd54a; /* used for text */
+	--frame-color: #ffd54a; /* frame and FAB color */
+	--frame-width: 3px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+	line-height: 1.4;
+	padding: 24px;
+	background: #000; /* page background black */
+	color: var(--muted-yellow); /* main text color set to bright yellow */
+}
+
+button { cursor: pointer; }
+
+.hidden { display: none; }
+
+/* Ensure modal is hidden when using the hidden attribute or the .hidden class even
+	though #modalOverlay sets display:flex (ID selector has higher specificity). */
+#modalOverlay.hidden, #modalOverlay[hidden] { display: none; }
+
+#posts { max-width: 700px; margin-top: 16px; }
+
+/* Floating action button style for #postButton */
+#postButton {
+	width: 64px;
+	height: 64px;
+	border-radius: 50%;
+	background: royalblue;
+	color: #000;
+	font-size: 32px;
+	line-height: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+	position: fixed;
+	right: 24px;
+	bottom: 24px;
+	z-index: 1100;
+}
+
+#postButton:focus { outline: 3px solid rgba(19,102,214,0.18); }
+
+/* Responsive tweaks for small screens */
+@media (max-width: 600px) {
+	body { padding: 12px; }
+	header h1 { font-size: 18px; }
+	#postButton {
+		width: 56px;
+		height: 56px;
+		font-size: 28px;
+		right: 16px;
+		bottom: 16px;
+	}
+	#modal {
+		width: calc(100% - 32px);
+		max-width: none;
+		margin: 0 8px;
+		max-height: calc(100vh - 32px);
+		overflow: auto;
+	}
+	#modal form { gap: 8px; }
+	#modal input[type="text"], #modal textarea, #modal select { font-size: 15px; }
+	#posts { margin-top: 12px; }
+}
+
+/* Ensure modal is scrollable on very small devices */
+#modal { box-sizing: border-box; }
+
+.post {
+	border: 1px solid #e0e0e0;
+	padding: 12px;
+	border-radius: 6px;
+	margin-bottom: 12px;
+	background: #fafafa;
+}
+
+.post .meta {
+	font-size: 13px;
+	color: #555;
+	margin-bottom: 8px;
+}
+
+.post .rating {
+	font-weight: 600;
+	color: var(--accent);
+}
+
+/* modal */
+#modalOverlay {
+	position: fixed;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--overlay-bg);
+	z-index: 1000;
+}
+
+#modal {
+	background: var(--modal-bg);
+	color: var(--muted-yellow);
+	padding: 18px;
+	border-radius: 8px;
+	max-width: 480px;
+	width: 94%;
+	box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+	border: 1px solid rgba(255, 230, 150, 0.12);
+}
+
+#modal h2 { margin-top: 0; }
+
+#modal form { display: flex; flex-direction: column; gap: 10px; }
+#modal label { display: flex; flex-direction: column; font-size: 14px; }
+#modal input[type="text"], #modal textarea, #modal select {
+	padding: 8px;
+	border: 1px solid rgba(255,230,150,0.15);
+	border-radius: 6px;
+	font-size: 14px;
+	background: #121212;
+	color: #fff;
+}
+
+.buttons { display: flex; gap: 8px; justify-content: flex-end; }
+.buttons button { padding: 8px 12px; border-radius: 6px; border: 1px solid transparent; }
+#submitPost { background: var(--accent); color: #fff; }
+#cancelPost { background: #fff; border-color: #ccc; }
+
+/* Inner thin frame: 10px inset thin border using pseudo-element */
+body::before {
+	content: "";
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	bottom: 10px;
+	left: 10px;
+	pointer-events: none;
+	border: var(--frame-width) solid var(--frame-color);
+	border-radius: 6px;
+	z-index: 1050;
+}
+

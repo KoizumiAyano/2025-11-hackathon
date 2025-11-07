@@ -11,7 +11,7 @@ This repository was initialized by an automated script.
 例：ポート 8000 で起動する場合
 
 ```bash
-cd /Users/nozomi0407/2025-11-hackathon
+cd /2025-11-hackathon
 python3 -m http.server 8000
 # ブラウザで http://localhost:8000/ を開く
 ```
