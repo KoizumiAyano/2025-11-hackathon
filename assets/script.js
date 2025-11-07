@@ -1,17 +1,15 @@
 // [script.js] (API連携 + ランダム配置UI 統合版)
-
 document.addEventListener('DOMContentLoaded', () => {
     // --- 1. APIとDOMの基本設定 ---
     const API_URL = 'http://127.0.0.1:8000'; // ⬅️ APIサーバーのURL
 
-    // 投稿モーダル (新規作成)
     const postButton = document.getElementById('postButton');
+    const reloadButton = document.getElementById('reloadButton');
     const overlay = document.getElementById('modalOverlay');
     const cancelBtn = document.getElementById('cancelPost');
     const form = document.getElementById('postForm');
-    const posts = document.getElementById('posts'); // 投稿を配置する「ステージ」
+    const posts = document.getElementById('posts');
 
-    // 閲覧モーダル (詳細表示)
     const viewOverlay = document.getElementById('viewOverlay');
     const viewClose = document.getElementById('viewClose');
     const viewNick = document.getElementById('viewNick');
@@ -19,15 +17,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const viewRating = document.getElementById('viewRating');
     const viewLike = document.getElementById('viewLike');
     const viewLikeCount = document.getElementById('viewLikeCount');
-    const viewDelete = document.getElementById('viewDelete'); // ⬅️ 追加した削除ボタン
-    
-    let currentViewedPostId = null; // 閲覧中の投稿のDB-ID
+    const viewDelete = document.getElementById('viewDelete'); // 削除ボタン
 
-    // --- 2. 投稿の「ランダム配置」ロジック (UI担当のコード) ---
-    // (このセクションは元のロジックをほぼそのまま流用・整理)
+    let currentViewedPostId = null;
 
+    // --- 2. ランダム配置ロジック ---
     function rectsOverlap(a, b) {
-        return !(a.left + a.width <= b.left || b.left + b.width <= a.left || a.top + a.height <= b.top || b.top + b.height <= a.top);
+        return !(a.left + a.width <= b.left ||
+                 b.left + b.width <= a.left ||
+                 a.top + a.height <= b.top ||
+                 b.top + b.height <= a.top);
     }
 
     function generatePresetPositions(count = 10) {
@@ -36,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const stageH = posts.clientHeight || Math.max(window.innerHeight - 20, 200);
         const positions = [];
         const baseline = 120;
-        const minW = baseline * 2, maxW = baseline * 5;
+        const minW = baseline * 2;
+        const maxW = baseline * 5;
         let attempts = 0;
         const maxAttempts = 2000;
         while (positions.length < count && attempts < maxAttempts) {
@@ -56,31 +56,22 @@ document.addEventListener('DOMContentLoaded', () => {
         return positions;
     }
 
-    // ページ読み込み時に、あらかじめ位置を計算しておく
     if (!window.PRESET_POSITIONS || !Array.isArray(window.PRESET_POSITIONS) || window.PRESET_POSITIONS.length === 0) {
         window.PRESET_POSITIONS = generatePresetPositions(10);
     }
 
-    /**
-     * [リファクタリング]
-     * 投稿ラッパー要素(div)をステージのランダムな位置に配置する
-     * @param {HTMLElement} wrapper - .post ラッパー
-     * @param {HTMLElement} img - .post-image 画像
-     */
     function applyRandomPosition(wrapper, img) {
         function place() {
             if (!posts) return;
             const stageW = posts.clientWidth;
             const stageH = posts.clientHeight;
-            const imgW = img.offsetWidth || 240; // デフォルト幅
-            const imgH = img.offsetHeight || 180; // デフォルト高さ
+            const imgW = img.offsetWidth || 240;
+            const imgH = img.offsetHeight || 180;
 
             const maxLeft = Math.max(0, stageW - imgW);
             const maxTop = Math.max(0, stageH - imgH);
 
             let left = null, top = null;
-            
-            // PRESET_POSITIONS から位置を取得
             if (window.PRESET_POSITIONS && window.PRESET_POSITIONS.length > 0) {
                 const p = window.PRESET_POSITIONS.shift();
                 if (p) {
@@ -89,8 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     try { img.style.width = (Number(p.width) || imgW) + 'px'; } catch (e) {}
                 }
             }
-
-            // ランダムフォールバック
             if (left == null) left = Math.floor(Math.random() * (maxLeft + 1));
             if (top == null) top = Math.floor(Math.random() * (maxTop + 1));
 
@@ -102,54 +91,42 @@ document.addEventListener('DOMContentLoaded', () => {
             place();
         } else {
             img.addEventListener('load', place);
-            setTimeout(place, 300); // フォールバック
+            setTimeout(place, 300);
         }
     }
 
-    /**
-     * [新機能] 
-     * APIから取得したpostオブジェクトを元に、DOM(画像)をステージに追加する
-     * @param {object} post - APIから返された投稿オブジェクト
-     */
+    // --- 3. 投稿をDOMに追加 ---
     function addPostToDOM(post) {
-        // (元の submit ハンドラ内のロジックを、この関数に移動・API対応させた)
-        const IMAGES = ['src/image/sunflower.png']; // 画像は仮
-        
+        const IMAGES = [
+            'src/image/gerbera.png',
+            'src/image/lily.png',
+            'src/image/margaret.png',
+            'src/image/rose.png',
+            'src/image/sunflower.png',
+            'src/image/sweetpee.png'
+        ];
+
         const img = document.createElement('img');
         img.className = 'post-image';
         img.src = IMAGES[Math.floor(Math.random() * IMAGES.length)];
         img.alt = `${escapeHtml(post.name)}さんの投稿画像`;
 
-        // -----------------------------------------------------------------
-        // [最重要] ローカルID(Date.now)の代わりに、DBのIDとデータを設定
         img.dataset.postId = post.post_id;
         img.dataset.likes = post.like_count;
         img.dataset.nick = post.name;
         img.dataset.content = post.content;
         img.dataset.rating = post.parm_unluckey;
-        // -----------------------------------------------------------------
 
         const wrapper = document.createElement('div');
         wrapper.className = 'post';
         wrapper.style.position = 'absolute';
-        
         wrapper.appendChild(img);
-        if (posts) posts.appendChild(wrapper);
+        posts.appendChild(wrapper);
 
-        // 位置を決定して配置
         applyRandomPosition(wrapper, img);
     }
 
-    // --- 3. 投稿モーダル (新規作成) の制御 ---
-    
-    if (postButton) postButton.addEventListener('click', openModal);
-    if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
-    if (overlay) {
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) closeModal();
-        });
-    }
-
+    // --- 4. モーダル操作 ---
     function openModal() {
         overlay.classList.remove('hidden');
         overlay.hidden = false;
@@ -165,9 +142,11 @@ document.addEventListener('DOMContentLoaded', () => {
         postButton.focus();
     }
 
-    /**
-     * [API連携] フォーム送信 (POST /posts/)
-     */
+    if (postButton) postButton.addEventListener('click', openModal);
+    if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+    if (overlay) overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+
+    // --- 5. 投稿送信 (API連携) ---
     if (form) {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -179,8 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // (元のJS: ここでローカルにDOMを作っていた)
-            // [新] APIに送信するためのデータを作成
             const postData = {
                 name: nick,
                 content: content,
@@ -188,21 +165,14 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             try {
-                // APIにPOSTリクエスト
                 const response = await fetch(`${API_URL}/posts/`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(postData),
                 });
+                if (!response.ok) throw new Error('投稿に失敗しました。');
 
-                if (!response.ok) {
-                    throw new Error('投稿に失敗しました。');
-                }
-
-                // APIがDBに保存した結果 (post_idを含む) を返す
                 const newPost = await response.json();
-                
-                // DBから返ってきたデータを使って、画面に配置
                 addPostToDOM(newPost);
                 closeModal();
 
@@ -213,39 +183,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 4. 閲覧モーダル (詳細表示) の制御 ---
-
-    if (viewClose) viewClose.addEventListener('click', closeView);
-    if (viewOverlay) {
-        viewOverlay.addEventListener('click', (e) => {
-            if (e.target === viewOverlay) closeView();
-        });
-    }
-
-    /**
-     * [API連携] 画像クリックで閲覧モーダルを開く
-     */
-    if (posts) {
-        posts.addEventListener('click', (e) => {
-            const img = e.target.closest && e.target.closest('img.post-image');
-            if (img) {
-                // (元のJS: 個別に引数を渡していた)
-                // [新] img要素の data属性 から情報を読み込む
-                openView(img.dataset);
-            }
-        });
-    }
-    
+    // --- 6. 閲覧モーダル ---
     function openView(dataset) {
         if (!viewOverlay) return;
-        
-        // data属性から読み込んだ値をモーダルにセット
         viewNick.textContent = dataset.nick || '';
         viewBodyText.textContent = dataset.content || '';
         viewRating.textContent = dataset.rating || '';
         viewLikeCount.textContent = dataset.likes || '0';
-        
-        // [重要] 現在閲覧中の「DBのID」を保持する
         currentViewedPostId = dataset.postId || null;
 
         viewOverlay.classList.remove('hidden');
@@ -258,10 +202,62 @@ document.addEventListener('DOMContentLoaded', () => {
         viewOverlay.classList.add('hidden');
         viewOverlay.hidden = true;
         viewOverlay.setAttribute('aria-hidden', 'true');
-        currentViewedPostId = null; // IDをクリア
+        currentViewedPostId = null;
     }
 
-    // ESCキーでのクローズ (両モーダル対応)
+    if (viewClose) viewClose.addEventListener('click', closeView);
+    if (viewOverlay) viewOverlay.addEventListener('click', e => { if (e.target === viewOverlay) closeView(); });
+
+    if (posts) {
+        posts.addEventListener('click', (e) => {
+            const img = e.target.closest && e.target.closest('img.post-image');
+            if (img) openView(img.dataset);
+        });
+    }
+
+    // --- 7. いいね・削除機能 (API連携) ---
+    if (viewLike) {
+        viewLike.addEventListener('click', async () => {
+            if (!currentViewedPostId) return;
+            try {
+                const response = await fetch(`${API_URL}/posts/${currentViewedPostId}/like`, { method: 'PUT' });
+                if (!response.ok) throw new Error('いいねに失敗');
+                const updatedPost = await response.json();
+
+                viewLikeCount.textContent = updatedPost.like_count;
+                const imgEl = document.querySelector(`img.post-image[data-post-id="${currentViewedPostId}"]`);
+                if (imgEl) imgEl.dataset.likes = updatedPost.like_count;
+
+                viewLike.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }], { duration: 220 });
+            } catch (error) {
+                console.error(error);
+                alert(error.message);
+            }
+        });
+    }
+
+    if (viewDelete) {
+        viewDelete.addEventListener('click', async () => {
+            if (!currentViewedPostId) return;
+            if (!confirm('この投稿を削除しますか？')) return;
+
+            try {
+                const response = await fetch(`${API_URL}/posts/${currentViewedPostId}`, { method: 'DELETE' });
+                if (!response.ok) throw new Error('削除に失敗');
+
+                const imgEl = document.querySelector(`img.post-image[data-post-id="${currentViewedPostId}"]`);
+                if (imgEl) imgEl.closest('.post').remove();
+                closeView();
+            } catch (error) {
+                console.error(error);
+                alert(error.message);
+            }
+        });
+    }
+
+    // --- 8. リロード・ESCキー対応 ---
+    if (reloadButton) reloadButton.addEventListener('click', () => window.location.reload());
+
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             if (overlay && !overlay.classList.contains('hidden')) closeModal();
@@ -269,99 +265,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    /**
-     * [API連携] いいねボタン (PUT /posts/{id}/like)
-     */
-    if (viewLike) {
-        viewLike.addEventListener('click', async () => {
-            if (!currentViewedPostId) return;
-
-            // (元のJS: ローカルの data-likes を+1していた)
-            // [新] APIにPUTリクエスト
-            try {
-                const response = await fetch(`${API_URL}/posts/${currentViewedPostId}/like`, {
-                    method: 'PUT'
-                });
-                if (!response.ok) throw new Error('いいねに失敗');
-                
-                const updatedPost = await response.json(); // APIから最新のいいね数を取得
-
-                // 画面(モーダル)に反映
-                viewLikeCount.textContent = updatedPost.like_count;
-                
-                // ステージ上の元画像の data 属性も更新 (画面の整合性を保つため)
-                const imgEl = document.querySelector(`img.post-image[data-post-id="${currentViewedPostId}"]`);
-                if (imgEl) imgEl.dataset.likes = updatedPost.like_count;
-
-                viewLike.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }], { duration: 220 });
-
-            } catch (error) {
-                console.error(error);
-                alert(error.message);
-            }
-        });
-    }
-
-    /**
-     * [API連携] 削除ボタン (DELETE /posts/{id})
-     */
-    if (viewDelete) {
-        viewDelete.addEventListener('click', async () => {
-            if (!currentViewedPostId) return;
-            if (!confirm('この投稿を削除しますか？（蜜の味）')) return;
-
-            try {
-                const response = await fetch(`${API_URL}/posts/${currentViewedPostId}`, {
-                    method: 'DELETE'
-                });
-                if (!response.ok) throw new Error('削除に失敗');
-
-                // 画面(ステージ)から画像を削除
-                const imgEl = document.querySelector(`img.post-image[data-post-id="${currentViewedPostId}"]`);
-                if (imgEl) {
-                    imgEl.closest('.post').remove(); // ラッパーごと削除
-                }
-                
-                closeView(); // モーダルを閉じる
-
-            } catch (error) {
-                console.error(error);
-                alert(error.message);
-            }
-        });
-    }
-
-
-    // --- 5. ユーティリティと初期化 ---
-    
+    // --- 9. ユーティリティ・初期化 ---
     function escapeHtml(str) {
         if (typeof str !== 'string') return '';
-        return str.replace(/[&<>"']/g, (s) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s]));
+        return str.replace(/[&<>"']/g, (s) =>
+            ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s]));
     }
 
-    /**
-     * [API連携] ページ読み込み (GET /posts/)
-     */
     async function initializeApp() {
         try {
             const response = await fetch(`${API_URL}/posts/`);
             if (!response.ok) throw new Error('サーバーから投稿を取得できませんでした。');
-            
             const existingPosts = await response.json();
-            
-            posts.innerHTML = ''; // ステージをクリア
-            
-            // DBから取得したすべての投稿を、画面に配置する
-            existingPosts.forEach(post => {
-                addPostToDOM(post);
-            });
-
+            posts.innerHTML = '';
+            existingPosts.forEach(post => addPostToDOM(post));
         } catch (error) {
             console.error('初期化エラー:', error);
             posts.innerHTML = `<p class="error">${error.message}</p>`;
         }
     }
 
-    // アプリケーションの初期化（DBから投稿を読み込む）
     initializeApp();
 });
