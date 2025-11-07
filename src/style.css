@@ -58,6 +58,19 @@ button { cursor: pointer; }
 #viewModal p { margin: 8px 0; }
 #viewModal img { max-width: 100%; border-radius: 6px; display:block; margin-bottom: 12px; }
 
+/* Like button inside view modal */
+.like-area { display: flex; align-items: center; gap: 8px; }
+.like-area #viewLike {
+	background: transparent;
+	color: var(--frame-color);
+	border: 1px solid rgba(255,215,74,0.14);
+	padding: 6px 10px;
+	border-radius: 6px;
+	font-size: 18px;
+}
+.like-area #viewLike:active { transform: scale(0.98); }
+.like-area #viewLikeCount { font-weight: 600; color: var(--muted-yellow); }
+
 
 /* Floating action button style for #postButton */
 #postButton {

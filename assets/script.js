@@ -44,11 +44,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (!window.PRESET_POSITIONS || !Array.isArray(window.PRESET_POSITIONS) || window.PRESET_POSITIONS.length === 0) {
 			window.PRESET_POSITIONS = generatePresetPositions(10);
 		}
-    const viewOverlay = document.getElementById('viewOverlay');
-    const viewClose = document.getElementById('viewClose');
-    const viewNick = document.getElementById('viewNick');
-    const viewBodyText = document.getElementById('viewBodyText');
-    const viewRating = document.getElementById('viewRating');
+	const viewOverlay = document.getElementById('viewOverlay');
+	const viewClose = document.getElementById('viewClose');
+	const viewNick = document.getElementById('viewNick');
+	const viewBodyText = document.getElementById('viewBodyText');
+	const viewRating = document.getElementById('viewRating');
+	const viewLike = document.getElementById('viewLike');
+	const viewLikeCount = document.getElementById('viewLikeCount');
+	let currentViewedPostId = null;
 
 	function openModal() {
 		overlay.classList.remove('hidden');
@@ -100,6 +103,10 @@ document.addEventListener('DOMContentLoaded', () => {
 			img.className = 'post-image';
 			img.src = IMAGES[Math.floor(Math.random() * IMAGES.length)];
 			img.alt = `${nick}さんの投稿画像`;
+			// unique id for this post so view modal can reference it
+			const pid = 'post-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
+			img.dataset.postId = pid;
+			img.dataset.likes = '0';
 			img.dataset.nick = nick;
 			img.dataset.content = content;
 			img.dataset.rating = rating;
@@ -206,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		posts.addEventListener('click', (e) => {
 			const img = e.target.closest && e.target.closest('img.post-image');
 			if (img) {
-				openView(img.dataset.nick, img.dataset.content, img.dataset.rating, img.src);
+				openView(img.dataset.nick, img.dataset.content, img.dataset.rating, img.dataset.postId);
 			}
 		});
 	}
@@ -219,17 +226,42 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 
+	// Like button handler — single listener reads currentViewedPostId
+	if (viewLike) {
+		viewLike.addEventListener('click', () => {
+			if (!currentViewedPostId) return;
+			const el = document.querySelector('img.post-image[data-post-id="' + currentViewedPostId + '"]');
+			if (!el) return;
+			const prev = Number(el.dataset.likes || 0) || 0;
+			const next = prev + 1;
+			el.dataset.likes = String(next);
+			if (viewLikeCount) viewLikeCount.textContent = String(next);
+			// optional visual feedback
+			viewLike.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }], { duration: 220 });
+		});
+	}
+
 	document.addEventListener('keydown', (e) => {
 		if (e.key === 'Escape' && viewOverlay && !viewOverlay.classList.contains('hidden')) {
 			closeView();
 		}
 	});
 
-	function openView(nick, content, rating, imgSrc) {
+	function openView(nick, content, rating, postId) {
 		if (!viewOverlay) return;
 		viewNick.textContent = nick || '';
 		viewBodyText.textContent = content || '';
 		viewRating.textContent = rating || '';
+		// set like count from the original post element
+		currentViewedPostId = postId || null;
+		if (viewLikeCount) {
+			let count = 0;
+			try {
+				const el = document.querySelector('img.post-image[data-post-id="' + currentViewedPostId + '"]');
+				if (el && el.dataset && el.dataset.likes != null) count = Number(el.dataset.likes) || 0;
+			} catch (e) { count = 0; }
+			viewLikeCount.textContent = String(count);
+		}
 		// view modal shows only text fields (nick, content, rating) — no image
 		viewOverlay.classList.remove('hidden');
 		viewOverlay.hidden = false;
@@ -241,6 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		viewOverlay.classList.add('hidden');
 		viewOverlay.hidden = true;
 		viewOverlay.setAttribute('aria-hidden', 'true');
+		currentViewedPostId = null;
 	}
 
 	// NOTE: images now come from static files under src/image/, so no SVG generator is needed
