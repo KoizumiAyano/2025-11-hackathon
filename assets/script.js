@@ -6,9 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	const form = document.getElementById('postForm');
 	const posts = document.getElementById('posts');
 
-		// If the page does not provide PRESET_POSITIONS, generate ~10 non-overlapping
-		// positions (left/top/width/height in pixels) and expose them as
-		// window.PRESET_POSITIONS so the placement logic can consume them.
+		// ページが PRESET_POSITIONS を提供しない場合、重複しにくい座標を約10個生成し、
+		// window.PRESET_POSITIONS に格納して配置ロジックで利用できるようにする。
 		function rectsOverlap(a, b) {
 			return !(a.left + a.width <= b.left || b.left + b.width <= a.left || a.top + a.height <= b.top || b.top + b.height <= a.top);
 		}
@@ -19,15 +18,15 @@ document.addEventListener('DOMContentLoaded', () => {
 			const stageH = posts.clientHeight || Math.max(window.innerHeight - 20, 200);
 			const positions = [];
 			const baseline = 120;
-			const minW = baseline * 2; // 240
-			const maxW = baseline * 5; // 600
+			const minW = baseline * 2; // 最小幅 240px
+			const maxW = baseline * 5; // 最大幅 600px
 			let attempts = 0;
 			const maxAttempts = 2000;
 			while (positions.length < count && attempts < maxAttempts) {
 				attempts++;
 				const w = Math.floor(Math.random() * (maxW - minW + 1)) + minW;
 				const h = Math.round(w * 0.75);
-				if (w >= stageW || h >= stageH) continue; // too big for stage
+				if (w >= stageW || h >= stageH) continue; // ステージに収まらない場合はスキップ
 				const maxLeft = Math.max(0, stageW - w);
 				const maxTop = Math.max(0, stageH - h);
 				const left = Math.floor(Math.random() * (maxLeft + 1));
@@ -73,10 +72,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (postButton) postButton.addEventListener('click', openModal);
 	if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
 
-	// reload button: simple page reload
+	// リロードボタン: 単純にページを再読み込み
 	if (reloadButton) {
 		reloadButton.addEventListener('click', () => {
-			// preserve focus/aria where possible, then reload
+			// 可能ならフォーカスやARIAを保ってから再読み込みする
 			try { reloadButton.disabled = true; } catch (e) {}
 			window.location.reload();
 		});
@@ -105,9 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				return;
 			}
 
-			// pick a random image from src/image/ to use as the post thumbnail
-			// pick a random image from src/image/ to use as the post thumbnail
-			// Updated to include all available flower images in the project
+			// 投稿サムネイルに使う画像を src/image/ からランダム選択する
+			// プロジェクト内の全ての花画像を含むように更新済み
 			const IMAGES = [
 				'src/image/gerbera.png',
 				'src/image/lily.png',
@@ -120,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			img.className = 'post-image';
 			img.src = IMAGES[Math.floor(Math.random() * IMAGES.length)];
 			img.alt = `${nick}さんの投稿画像`;
-			// unique id for this post so view modal can reference it
+			// ビュー用モーダルが参照できるよう、投稿に一意のIDを付与する
 			const pid = 'post-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
 			img.dataset.postId = pid;
 			img.dataset.likes = '0';
@@ -128,10 +126,10 @@ document.addEventListener('DOMContentLoaded', () => {
 			img.dataset.content = content;
 			img.dataset.rating = rating;
 
-			// set a random width between 2x and 5x of the previous baseline (baseline ~120px)
+			// 基準幅（約120px）の2倍〜5倍の範囲でランダムに幅を設定する
 			const baseline = 120;
-			const minW = baseline * 2; // 240px
-			const maxW = baseline * 5; // 600px
+			const minW = baseline * 2; // 最小幅 240px
+			const maxW = baseline * 5; // 最大幅 600px
 			const rndW = Math.floor(Math.random() * (maxW - minW + 1)) + minW;
 			img.style.width = rndW + 'px';
 			img.style.height = 'auto';
@@ -139,11 +137,11 @@ document.addEventListener('DOMContentLoaded', () => {
 			const wrapper = document.createElement('div');
 			wrapper.className = 'post';
 			wrapper.style.position = 'absolute';
-			// append first so it participates in layout and we can measure sizes
+			// 先に追加してレイアウトに参加させ、サイズ計測ができるようにする
 			if (posts) posts.appendChild(wrapper);
 			wrapper.appendChild(img);
 
-			// Wait for image to load so we can calculate its rendered size for positioning
+			// 画像の読み込みを待ってレンダリング後のサイズを計測し、配置位置を算出する
 			function placeImage() {
 				if (!posts) return;
 				const stageW = posts.clientWidth;
@@ -154,11 +152,11 @@ document.addEventListener('DOMContentLoaded', () => {
 				const maxLeft = Math.max(0, stageW - imgW);
 				const maxTop = Math.max(0, stageH - imgH);
 
-				// Helper: resolve a coordinate value provided by the user.
-				// Supported formats:
-				//  - number >= 1 : pixels
-				//  - number between 0 and 1 : fraction of available range (0..max)
-				//  - string with '%' : percentage of stage (e.g. '10%')
+				// 補助: ユーザー提供の座標値を解決する
+				// サポートするフォーマット:
+				//  - 数値が 1 以上: ピクセル指定
+				//  - 0〜1 の数値: 使用可能範囲に対する割合（0..max）
+				//  - '%' を含む文字列: ステージに対するパーセンテージ（例: '10%'）
 				function resolveCoord(val, max) {
 					if (val == null) return null;
 					if (typeof val === 'string' && val.trim().endsWith('%')) {
@@ -170,14 +168,14 @@ document.addEventListener('DOMContentLoaded', () => {
 						if (val >= 0 && val <= 1) {
 							return Math.round(val * max);
 						}
-						// treat as pixels
+						// ピクセル指定として扱う
 						return Math.round(Math.min(Math.max(0, val), max));
 					}
 					return null;
 				}
 
-				// If the page provides an array `window.PRESET_POSITIONS`, consume the next
-				// coordinate object and use it as left/top. Supported keys: left/top or x/y.
+				// ページが `window.PRESET_POSITIONS` 配列を提供する場合、先頭の座標オブジェクトを取り出して left/top に使います。
+				// サポートするキー: left/top または x/y
 				let left = null;
 				let top = null;
 				try {
@@ -188,14 +186,14 @@ document.addEventListener('DOMContentLoaded', () => {
 								const rawTop = p.top != null ? p.top : (p.y != null ? p.y : null);
 								// if the preset includes a width, apply it so measurement matches generation
 								if (p.width != null) {
-									try { img.style.width = (Number(p.width) || 0) + 'px'; } catch (e) { /* ignore */ }
+									try { img.style.width = (Number(p.width) || 0) + 'px'; } catch (e) { /* 無視 */ }
 								}
 								left = resolveCoord(rawLeft, maxLeft);
 								top = resolveCoord(rawTop, maxTop);
 							}
 						}
 				} catch (e) {
-					// ignore and fallback to random
+					// 例外が発生した場合は無視してランダム配置へフォールバック
 				}
 
 				if (left == null) {
@@ -225,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 
-	// Clicking a post image opens the view modal with the content
+	// 投稿画像をクリックすると、その投稿内容を表示するビュー用モーダルを開く
 	if (posts) {
 		posts.addEventListener('click', (e) => {
 			const img = e.target.closest && e.target.closest('img.post-image');
@@ -243,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 
-	// Like button handler — single listener reads currentViewedPostId
+	// いいねボタンのハンドラ — currentViewedPostId を参照して処理する
 	if (viewLike) {
 		viewLike.addEventListener('click', () => {
 			if (!currentViewedPostId) return;
@@ -253,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			const next = prev + 1;
 			el.dataset.likes = String(next);
 			if (viewLikeCount) viewLikeCount.textContent = String(next);
-			// optional visual feedback
+			// 視覚的なフィードバック（任意）
 			viewLike.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }], { duration: 220 });
 		});
 	}
@@ -293,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		currentViewedPostId = null;
 	}
 
-	// NOTE: images now come from static files under src/image/, so no SVG generator is needed
+	// 注: 画像は `src/image/` の静的ファイルから取得するようになったため、SVG ジェネレータは不要
 
 	function escapeHtml(str) {
 		return str.replace(/[&<>"']/g, (s) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s]));

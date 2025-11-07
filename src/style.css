@@ -2,9 +2,9 @@
 	--overlay-bg: rgba(0,0,0,0.6);
 	--modal-bg: #0f0f0f;
 	--accent: #1366d6;
-	/* brighter yellow for main text and frame */
-	--muted-yellow: #ffd54a; /* used for text */
-	--frame-color: #ffd54a; /* frame and FAB color */
+	/* メインテキストと枠線に使う明るめの黄色 */
+	--muted-yellow: #ffd54a; /* テキストに使用 */
+	--frame-color: #ffd54a; /* フレームやFABに使用する色 */
 	--frame-width: 3px;
 }
 
@@ -14,17 +14,17 @@ body {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 	line-height: 1.4;
 	margin: 0;
-	padding: 0; /* make the stage flush with the frame */
+	padding: 0; /* ステージをフレームにぴったり合わせる */
 	min-height: 100vh;
 	height: 100vh;
-	background: #000; /* page background black */
-	color: var(--muted-yellow); /* main text color set to bright yellow */
-	overflow: hidden; /* 固定表示・スクロール禁止 */
+	background: #000; /* ページ背景を黒に設定 */
+	color: var(--muted-yellow); /* メインテキスト色を明るい黄色に設定 */
+	overflow: hidden; /* 画面のスクロールを無効にする */
 }
 
-/* place header content inside the inner frame */
+/* ヘッダーの内容を内側のフレーム内に収める */
 header {
-	padding-left: 20px; /* move title right so it's inside the frame */
+	padding-left: 20px; /* タイトルを右へずらしてフレーム内に収める */
 	padding-top: 12px;
 }
 header h1 { margin: 0; }
@@ -33,8 +33,9 @@ button { cursor: pointer; }
 
 .hidden { display: none; }
 
-/* Ensure overlays are hidden when using the hidden attribute or the .hidden class.
-   Use a selector that targets both overlays so ID-level display:flex rules don't override it. */
+/* オーバーレイを hidden 属性や .hidden クラスで非表示にする。
+	ID レベルの display:flex が優先されるケースへ対処するため、
+	両方をターゲットにするセレクターを使っている。 */
 #modalOverlay.hidden, #modalOverlay[hidden],
 #viewOverlay.hidden, #viewOverlay[hidden] {
 	display: none !important;
@@ -42,8 +43,8 @@ button { cursor: pointer; }
 
 .post { background: transparent; border: none; padding: 0; }
 
-/* posts stage: fixed full-area inside the inner frame (no scrolling). Images will be
-   absolutely positioned inside this container with random left/top coordinates. */
+/* 投稿ステージ: 内側フレームの全領域を使う固定領域（スクロールなし）。
+	画像はこのコンテナ内で絶対配置され、ランダムな left/top に置かれる。 */
 #posts {
 	position: fixed;
 	top: 10px;
@@ -51,21 +52,21 @@ button { cursor: pointer; }
 	bottom: 10px;
 	left: 10px;
 	pointer-events: auto;
-	overflow: hidden; /* ensure off-stage images are clipped */
+	overflow: hidden; /* ステージ外の画像をクリップする */
 	z-index: 1;
 }
 
-/* Each post wrapper will be absolutely positioned within #posts */
+/* 各投稿ラッパーは #posts 内で絶対配置される */
 .post { position: absolute; }
 .post-image { display:block; max-width:100%; height:auto; border-radius:8px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
 
-/* view modal styling */
+/* ビュー用モーダルのスタイル */
 #viewOverlay { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.7); z-index: 1200; }
 #viewModal { background: #111; color: var(--muted-yellow); padding: 18px; border-radius: 8px; max-width: 520px; width: calc(100% - 40px); box-shadow: 0 10px 30px rgba(0,0,0,0.6); border: 1px solid rgba(255,215,74,0.12); }
 #viewModal p { margin: 8px 0; }
 #viewModal img { max-width: 100%; border-radius: 6px; display:block; margin-bottom: 12px; }
 
-/* Like button inside view modal */
+/* ビュー用モーダル内のいいねボタン */
 .like-area { display: flex; align-items: center; gap: 8px; }
 .like-area #viewLike {
 	background: transparent;
@@ -79,7 +80,7 @@ button { cursor: pointer; }
 .like-area #viewLikeCount { font-weight: 600; color: var(--muted-yellow); }
 
 
-/* Floating action button style for #postButton */
+/* 新規投稿ボタン（FAB）のスタイル */
 #postButton {
 	width: 64px;
 	height: 64px;
@@ -93,14 +94,14 @@ button { cursor: pointer; }
 	justify-content: center;
 	border: none;
 	box-shadow: 0 6px 18px rgba(0,0,0,0.4);
-	/* place inline under #posts, with slight left margin so it's inside the frame */
+	/* #posts の直下にインラインで配置。左に余白を付けてフレーム内に収める */
 	position: static;
 	margin: 12px 0 0 20px;
 	z-index: 1100;
 }
 
 #reloadButton {
-	/* match FAB style */
+	/* FAB と同じ見た目に合わせる */
 	width: 64px;
 	height: 64px;
 	border-radius: 50%;
@@ -114,7 +115,7 @@ button { cursor: pointer; }
 	border: none;
 	box-shadow: 0 6px 18px rgba(0,0,0,0.4);
 	position: fixed;
-	right: 24px; /* bottom-right */
+	right: 24px; /* 右下に表示 */
 	bottom: 24px;
 	z-index: 1100;
 }
@@ -125,13 +126,28 @@ button { cursor: pointer; }
 @media (max-width: 600px) {
 	body { padding: 12px; }
 	header h1 { font-size: 18px; }
+	/* モバイルでは投稿ボタンを小さくし中央に表示 */
 	#postButton {
 		width: 56px;
 		height: 56px;
 		font-size: 28px;
 		margin-left: 12px;
 	}
+	/* リロードボタンは右下に表示（少し小さめ） */
 	#reloadButton { right: 16px; bottom: 16px; width:56px; height:56px; font-size:28px; }
+
+	/* Mobile-specific adjustments for posts/stage and images */
+	#posts { left: 8px; right: 8px; top: 8px; bottom: 8px; }
+	.post-image {
+		/* cap image width to viewport width on small devices while preserving aspect */
+		max-width: min(70vw, 320px) !important;
+		height: auto !important;
+		border-radius: 6px;
+	}
+	/* center the post button under the posts area on mobile for easier reach */
+	#postButton { display: block; margin: 12px auto 0; }
+
+	/* make modal controls touch-friendly */
 	#modal {
 		width: calc(100% - 32px);
 		max-width: none;
@@ -140,7 +156,8 @@ button { cursor: pointer; }
 		overflow: auto;
 	}
 	#modal form { gap: 8px; }
-	#modal input[type="text"], #modal textarea, #modal select { font-size: 15px; }
+	#modal input[type="text"], #modal textarea, #modal select { padding: 12px; font-size: 15px; }
+	.buttons button { padding: 12px 14px; }
 	#posts { margin-top: 12px; }
 }
 
