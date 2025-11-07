@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 	const postButton = document.getElementById('postButton');
+	const reloadButton = document.getElementById('reloadButton');
 	const overlay = document.getElementById('modalOverlay');
 	const cancelBtn = document.getElementById('cancelPost');
 	const form = document.getElementById('postForm');
@@ -72,6 +73,15 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (postButton) postButton.addEventListener('click', openModal);
 	if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
 
+	// reload button: simple page reload
+	if (reloadButton) {
+		reloadButton.addEventListener('click', () => {
+			// preserve focus/aria where possible, then reload
+			try { reloadButton.disabled = true; } catch (e) {}
+			window.location.reload();
+		});
+	}
+
 	if (overlay) {
 		overlay.addEventListener('click', (e) => {
 			if (e.target === overlay) closeModal();
@@ -96,8 +106,15 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 
 			// pick a random image from src/image/ to use as the post thumbnail
+			// pick a random image from src/image/ to use as the post thumbnail
+			// Updated to include all available flower images in the project
 			const IMAGES = [
+				'src/image/gerbera.png',
+				'src/image/lily.png',
+				'src/image/margaret.png',
+				'src/image/rose.png',
 				'src/image/sunflower.png',
+				'src/image/sweetpee.png'
 			];
 			const img = document.createElement('img');
 			img.className = 'post-image';
