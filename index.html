@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>投稿デモ</title>
+		<!-- プロジェクト内の既存ファイルを参照 -->
+		<link rel="stylesheet" href="src/style.css">
+		<script src="assets/script.js" defer></script>
+	</head>
+	<body>
+		<header>
+			<h1>投稿デモ</h1>
+		</header>
+
+		<button id="postButton" aria-label="新しい投稿を追加">＋</button>
+
+		<main>
+			<section id="posts" aria-live="polite">
+				<!-- 投稿がここに追加されます -->
+			</section>
+		</main>
+
+		<!-- モーダル（initially hidden） -->
+		<div id="modalOverlay" class="hidden" aria-hidden="true" hidden>
+			<div id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+				<h2 id="modalTitle">New Post</h2>
+				<form id="postForm">
+					<label>
+						ニックネーム
+						<input type="text" id="nickname" name="nickname" maxlength="50" required>
+					</label>
+
+					<label>
+						投稿内容
+						<textarea id="content" name="content" rows="4" required></textarea>
+					</label>
+
+					<label>
+						不幸指数（1〜5）
+						<select id="rating" name="rating">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5" selected>5</option>
+						</select>
+					</label>
+
+					<div class="buttons">
+                        <button type="button" id="cancelPost">CANCEL</button>
+						<button type="submit" id="submitPost">POST</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
+
