@@ -1,5 +1,6 @@
 :root {
-	--overlay-bg: rgba(0,0,0,0.6);
+	/* モーダルオーバーレイ: 黒よりややグレー寄りで不透明度を上げ、背景のコントラストを強める */
+	--overlay-bg: rgba(34,34,34,0.76);
 	--modal-bg: #0f0f0f;
 	--accent: #1366d6;
 	/* メインテキストと枠線に使う明るめの黄色 */
@@ -60,6 +61,26 @@ button { cursor: pointer; }
 .post { position: absolute; }
 .post-image { display:block; max-width:100%; height:auto; border-radius:8px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
 
+/* 投稿画像下のキャプション（ニックネーム / 評価 / いいね数） */
+.post-caption {
+	position: absolute;
+	left: 6px;
+	right: 6px;
+	bottom: 8px;
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	justify-content: space-between;
+	background: rgba(16,16,16,0.68);
+	color: var(--muted-yellow);
+	padding: 6px 8px;
+	border-radius: 6px;
+	font-size: 12px;
+	pointer-events: none; /* キャプションが画像クリックを妨げないようにする */
+}
+.post-caption .post-nick { font-weight: 700; font-size: 13px; }
+.post-caption .post-rating, .post-caption .post-likes { opacity: 0.95; font-size: 12px; }
+
 /* ビュー用モーダルのスタイル */
 #viewOverlay { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.7); z-index: 1200; }
 #viewModal { background: #111; color: var(--muted-yellow); padding: 18px; border-radius: 8px; max-width: 520px; width: calc(100% - 40px); box-shadow: 0 10px 30px rgba(0,0,0,0.6); border: 1px solid rgba(255,215,74,0.12); }
@@ -94,10 +115,12 @@ button { cursor: pointer; }
 	justify-content: center;
 	border: none;
 	box-shadow: 0 6px 18px rgba(0,0,0,0.4);
-	/* #posts の直下にインラインで配置。左に余白を付けてフレーム内に収める */
-	position: static;
-	margin: 12px 0 0 20px;
-	z-index: 1100;
+	/* 固定表示にしてステージ(#posts)より前面に出す */
+	position: fixed;
+	left: 20px;
+	bottom: 24px;
+	z-index: 2000; /* 明示的に大きくして確実に前面へ */
+	pointer-events: auto;
 }
 
 #reloadButton {
@@ -144,8 +167,10 @@ button { cursor: pointer; }
 		height: auto !important;
 		border-radius: 6px;
 	}
-	/* center the post button under the posts area on mobile for easier reach */
-	#postButton { display: block; margin: 12px auto 0; }
+	 /* mobile: center the post button under the posts area for easier reach
+		 -> on small screens we switch back to static/relative positioning so
+		 it appears centered in the document flow. */
+	 #postButton { display: block; position: relative; margin: 12px auto 0; left: auto; bottom: auto; }
 
 	/* make modal controls touch-friendly */
 	#modal {
@@ -172,7 +197,8 @@ button { cursor: pointer; }
 	align-items: center;
 	justify-content: center;
 	background: var(--overlay-bg);
-	z-index: 1000;
+	/* 投稿ボタンより前面に出す（postButton z-index:1100） */
+	z-index: 1300;
 }
 
 #modal {
