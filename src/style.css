@@ -28,7 +28,11 @@ header {
 	padding-left: 20px; /* タイトルを右へずらしてフレーム内に収める */
 	padding-top: 12px;
 }
-header h1 { margin: 0; }
+header h1
+{
+	margin: 0;
+	text-align: center;
+}
 
 button { cursor: pointer; }
 
@@ -61,22 +65,18 @@ button { cursor: pointer; }
 .post { position: absolute; }
 .post-image { display:block; max-width:100%; height:auto; border-radius:8px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
 
+/* サイズは JavaScript 側で制御するため、ここでは幅の強制を行わない */
+.post-image {
+	/* JS が width を直接設定します。スタイルからの強制幅は無効化しました。 */
+	max-width: none;
+	height: auto !important;
+}
+
 /* 投稿画像下のキャプション（ニックネーム / 評価 / いいね数） */
 .post-caption {
-	position: absolute;
-	left: 6px;
-	right: 6px;
-	bottom: 8px;
-	display: flex;
-	gap: 8px;
-	align-items: center;
-	justify-content: space-between;
-	background: rgba(16,16,16,0.68);
-	color: var(--muted-yellow);
-	padding: 6px 8px;
-	border-radius: 6px;
-	font-size: 12px;
-	pointer-events: none; /* キャプションが画像クリックを妨げないようにする */
+	/* キャプションはデフォルトで非表示にする（タップ/クリックで表示する必要がある場合は
+	   追加の JS で wrapper に .revealed クラスを付与する等で切り替え可能） */
+	display: none !important;
 }
 .post-caption .post-nick { font-weight: 700; font-size: 13px; }
 .post-caption .post-rating, .post-caption .post-likes { opacity: 0.95; font-size: 12px; }
