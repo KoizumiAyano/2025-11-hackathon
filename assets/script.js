@@ -1,7 +1,12 @@
 // [script.js] (API連携 + ランダム配置UI 統合版)
 document.addEventListener('DOMContentLoaded', () => {
     // --- 1. APIとDOMの基本設定 ---
-    const API_URL = 'http://127.0.0.1:8000'; // ⬅️ APIサーバーのURL
+    // APIサーバーのURL (開発時は uvicorn の起動ポートに合わせてください)
+    // 注意: フロントを `http://localhost:8000` で立ち上げている場合、
+    // `http://127.0.0.1:8000` 宛の fetch はローカルの静的ファイルサーバに届き
+    // 404/クロスオリジンエラーになることがあります。uvicorn が 8001 で起動
+    // しているなら下のように設定してください。
+    const API_URL = 'http://127.0.0.1:8001'; // ⬅️ 必要に応じてポートを変更
 
     const postButton = document.getElementById('postButton');
     const reloadButton = document.getElementById('reloadButton');

@@ -1,0 +1,47 @@
+127.0.0.1 - - [08/Nov/2025 12:10:05] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Nov/2025 12:10:05] "GET /src/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [08/Nov/2025 12:10:05] "GET /assets/script.js HTTP/1.1" 200 -
+127.0.0.1 - - [08/Nov/2025 12:10:05] code 404, message File not found
+127.0.0.1 - - [08/Nov/2025 12:10:05] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [08/Nov/2025 12:10:07] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Nov/2025 12:10:15] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Nov/2025 12:10:15] code 404, message File not found
+127.0.0.1 - - [08/Nov/2025 12:10:15] "GET /posts/ HTTP/1.1" 404 -
+127.0.0.1 - - [08/Nov/2025 12:10:21] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [08/Nov/2025 12:10:21] code 404, message File not found
+127.0.0.1 - - [08/Nov/2025 12:10:21] "GET /posts/ HTTP/1.1" 404 -
+127.0.0.1 - - [08/Nov/2025 12:10:21] code 404, message File not found
+127.0.0.1 - - [08/Nov/2025 12:10:21] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [08/Nov/2025 12:10:22] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [08/Nov/2025 12:10:22] code 404, message File not found
+127.0.0.1 - - [08/Nov/2025 12:10:22] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [08/Nov/2025 12:10:22] code 404, message File not found
+127.0.0.1 - - [08/Nov/2025 12:10:22] "GET /posts/ HTTP/1.1" 404 -
+127.0.0.1 - - [08/Nov/2025 12:10:31] code 404, message File not found
+127.0.0.1 - - [08/Nov/2025 12:10:31] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [08/Nov/2025 12:10:31] code 404, message File not found
+127.0.0.1 - - [08/Nov/2025 12:10:31] "GET /posts/ HTTP/1.1" 404 -
+127.0.0.1 - - [08/Nov/2025 12:10:39] code 404, message File not found
+127.0.0.1 - - [08/Nov/2025 12:10:39] "GET /posts/ HTTP/1.1" 404 -
+127.0.0.1 - - [08/Nov/2025 12:10:55] code 404, message File not found
+127.0.0.1 - - [08/Nov/2025 12:10:55] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [08/Nov/2025 12:13:40] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [08/Nov/2025 12:13:40] code 404, message File not found
+127.0.0.1 - - [08/Nov/2025 12:13:40] "GET /posts/ HTTP/1.1" 404 -
+127.0.0.1 - - [08/Nov/2025 12:13:40] code 404, message File not found
+127.0.0.1 - - [08/Nov/2025 12:13:40] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [08/Nov/2025 12:14:58] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [08/Nov/2025 12:14:58] code 404, message File not found
+127.0.0.1 - - [08/Nov/2025 12:14:58] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [08/Nov/2025 12:14:58] code 404, message File not found
+127.0.0.1 - - [08/Nov/2025 12:14:58] "GET /posts/ HTTP/1.1" 404 -
+127.0.0.1 - - [08/Nov/2025 12:15:25] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [08/Nov/2025 12:15:25] "GET /src/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [08/Nov/2025 12:15:25] "GET /assets/script.js HTTP/1.1" 200 -
+127.0.0.1 - - [08/Nov/2025 12:15:25] code 404, message File not found
+127.0.0.1 - - [08/Nov/2025 12:15:25] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [08/Nov/2025 12:15:31] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [08/Nov/2025 12:15:33] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [08/Nov/2025 12:15:33] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [08/Nov/2025 12:15:34] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [08/Nov/2025 12:15:35] "GET / HTTP/1.1" 304 -

@@ -1,0 +1,17 @@
+/Users/nozomi0407/2025-11-hackathon/.venv/lib/python3.11/site-packages/pydantic/_internal/_config.py:383: UserWarning: Valid config keys have changed in V2:
+* 'orm_mode' has been renamed to 'from_attributes'
+  warnings.warn(message, UserWarning)
+INFO:     Started server process [33771]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+INFO:     127.0.0.1:54001 - "GET /posts/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54272 - "GET /posts/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54272 - "GET /posts/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55073 - "GET /posts/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55453 - "GET /posts/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55457 - "GET /posts/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55457 - "GET /posts/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55457 - "GET /posts/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55457 - "GET /posts/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55457 - "GET /posts/ HTTP/1.1" 200 OK
