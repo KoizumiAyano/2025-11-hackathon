@@ -1,5 +1,6 @@
 // [script.js] (API連携 + ランダム配置UI 統合版)
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('[script] DOMContentLoaded fired');
     // --- 1. APIとDOMの基本設定 ---
     // APIサーバーのURL (開発時は uvicorn の起動ポートに合わせてください)
     // 注意: フロントを `http://localhost:8000` で立ち上げている場合、
@@ -25,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const viewDelete = document.getElementById('viewDelete'); // 削除ボタン
 
     let currentViewedPostId = null;
+    console.log('[script] elements:', { postButton, overlay, cancelBtn, form, posts });
 
     // --- 2. ランダム配置ロジック ---
     function rectsOverlap(a, b) {
@@ -122,17 +124,28 @@ document.addEventListener('DOMContentLoaded', () => {
         img.dataset.content = post.content;
         img.dataset.rating = post.parm_unluckey;
 
-        const wrapper = document.createElement('div');
-        wrapper.className = 'post';
-        wrapper.style.position = 'absolute';
-        wrapper.appendChild(img);
-        posts.appendChild(wrapper);
+    const wrapper = document.createElement('div');
+    wrapper.className = 'post';
+    wrapper.style.position = 'absolute';
+
+    // キャプション（ニックネーム / 不幸指標 / いいね数）
+    const caption = document.createElement('div');
+    caption.className = 'post-caption';
+    const nick = escapeHtml(post.name || img.dataset.nick || '');
+    const rating = escapeHtml(String(post.parm_unluckey || img.dataset.rating || ''));
+    const likes = escapeHtml(String(post.like_count || img.dataset.likes || 0));
+    caption.innerHTML = `\n+            <span class="post-nick">${nick}</span>\n+            <span class="post-rating">評価: ${rating}</span>\n+            <span class="post-likes">❤ ${likes}</span>\n+        `;
+
+    wrapper.appendChild(img);
+    wrapper.appendChild(caption);
+    posts.appendChild(wrapper);
 
         applyRandomPosition(wrapper, img);
     }
 
     // --- 4. モーダル操作 ---
     function openModal() {
+		console.log('openModal called');
         overlay.classList.remove('hidden');
         overlay.hidden = false;
         overlay.setAttribute('aria-hidden', 'false');
@@ -147,8 +160,15 @@ document.addEventListener('DOMContentLoaded', () => {
         postButton.focus();
     }
 
-    if (postButton) postButton.addEventListener('click', openModal);
-    if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+    if (postButton) {
+        console.log('[script] attaching click listener to postButton');
+        postButton.addEventListener('click', openModal);
+    } else {
+        console.warn('[script] postButton not found');
+    }
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', closeModal);
+    }
     if (overlay) overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
 
     // --- 5. 投稿送信 (API連携) ---
@@ -187,6 +207,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // NOTE: デバッグ用ログ/スタイルは開発時に一時追加しました。
+    // 実運用では不要なためここでは削除しています。
 
     // --- 6. 閲覧モーダル ---
     function openView(dataset) {
