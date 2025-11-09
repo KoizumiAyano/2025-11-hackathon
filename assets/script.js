@@ -436,4 +436,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     initializeApp();
+
+    // --- 10. リアルタイム更新 (SSE) ---
+    if (window.EventSource) {
+        try {
+            const es = new EventSource(`${API_URL}/posts/stream`);
+            es.onmessage = (e) => {
+                try {
+                    const msg = JSON.parse(e.data);
+                    const type = msg.type;
+                    const post = msg.post;
+                    if (!post) return;
+
+                    if (type === 'create') {
+                        // 新規投稿を表示領域に追加
+                        addPostToDOM(post);
+                    } else if (type === 'update') {
+                        // いいね等の更新
+                        const img = document.querySelector(`img.post-image[data-post-id="${post.post_id}"]`);
+                        if (img) {
+                            img.dataset.likes = post.like_count;
+                        }
+                        if (currentViewedPostId && Number(currentViewedPostId) === post.post_id) {
+                            viewLikeCount.textContent = post.like_count;
+                        }
+                    } else if (type === 'delete') {
+                        const img = document.querySelector(`img.post-image[data-post-id="${post.post_id}"]`);
+                        if (img) img.closest('.post')?.remove();
+                    }
+                } catch (err) {
+                    console.error('SSE message parse error', err, e.data);
+                }
+            };
+            es.onerror = (err) => {
+                console.warn('EventSource error', err);
+                // 再接続はブラウザ側で自動的に行われることが多い。
+            };
+        } catch (err) {
+            console.error('EventSource initialization failed', err);
+        }
+    }
 });
