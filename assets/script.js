@@ -167,8 +167,9 @@ document.addEventListener('DOMContentLoaded', () => {
             wrapper.style.top = startTop + 'px';
 
             // 落下アニメーション（Web Animations API を利用）
-            // モバイルではよりゆっくりさせる（例: 5s〜9s）、デスクトップは 4s〜8s
-            const duration = (isMobileScreen ? 5000 : 4000) + Math.floor(Math.random() * 4000);
+            // ユーザー要望で「ちょっとだけ速く」するため duration を短くする
+            // モバイルは 4s〜7s、デスクトップは 3s〜6s の範囲に調整
+            const duration = (isMobileScreen ? 4000 : 3000) + Math.floor(Math.random() * 3000);
             const easing = 'linear';
             // 無限ループで上から下へ落ちるアニメーション（到達後は再び上から降ってくる）
             const delay = Math.floor(Math.random() * 1200); // バラけさせるための遅延
@@ -386,6 +387,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 8. リロード・ESCキー対応 ---
     if (reloadButton) reloadButton.addEventListener('click', () => window.location.reload());
+
+    // ランキングページへの遷移ボタン（index.html に追加）
+    const rankingButton = document.getElementById('rankingButton');
+    if (rankingButton) {
+        rankingButton.addEventListener('click', () => {
+            // 同一オリジンで配信される静的ページへ遷移
+            window.location.href = 'ranking.html';
+        });
+    }
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
