@@ -1,141 +1,148 @@
 INFO:     Will watch for changes in these directories: ['/Users/nozomi0407/2025-11-hackathon']
 INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
-INFO:     Started reloader process [45832] using WatchFiles
-/Users/nozomi0407/2025-11-hackathon/.venv/lib/python3.11/site-packages/pydantic/_internal/_config.py:383: UserWarning: Valid config keys have changed in V2:
+INFO:     Started reloader process [20281] using WatchFiles
+/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/pydantic/_internal/_config.py:373: UserWarning: Valid config keys have changed in V2:
 * 'orm_mode' has been renamed to 'from_attributes'
   warnings.warn(message, UserWarning)
-INFO:     Started server process [45874]
+WARNING:  invalid configuration parameter name "supautils.disable_program", removing it
+DETAIL:  "supautils" is now a reserved prefix.
+INFO:     Started server process [20315]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     127.0.0.1:52749 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52749 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52749 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52852 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52877 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52877 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52877 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52941 - "OPTIONS /posts/ HTTP/1.1" 400 Bad Request
-INFO:     127.0.0.1:52949 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52941 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53106 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53106 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53106 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53106 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53106 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53106 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53158 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53158 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53158 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53158 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53158 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53158 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53158 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53222 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53255 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53288 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53288 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53288 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53288 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53395 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53697 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53697 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53793 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53793 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53793 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53793 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53793 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53830 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54133 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54133 - "OPTIONS /posts/1/like HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54133 - "PUT /posts/1/like HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54133 - "PUT /posts/1/like HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54133 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54133 - "PUT /posts/1/like HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54133 - "PUT /posts/1/like HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54133 - "PUT /posts/1/like HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54133 - "GET /posts/ HTTP/1.1" 200 OK
-WARNING:  WatchFiles detected changes in 'scripts/seed10.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [45874]
-/Users/nozomi0407/2025-11-hackathon/.venv/lib/python3.11/site-packages/pydantic/_internal/_config.py:383: UserWarning: Valid config keys have changed in V2:
-* 'orm_mode' has been renamed to 'from_attributes'
-  warnings.warn(message, UserWarning)
-INFO:     Started server process [46151]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-WARNING:  WatchFiles detected changes in 'scripts/seed10.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [46151]
-/Users/nozomi0407/2025-11-hackathon/.venv/lib/python3.11/site-packages/pydantic/_internal/_config.py:383: UserWarning: Valid config keys have changed in V2:
-* 'orm_mode' has been renamed to 'from_attributes'
-  warnings.warn(message, UserWarning)
-INFO:     Started server process [46307]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-INFO:     127.0.0.1:54829 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57552 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57552 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57552 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57552 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57552 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57605 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57605 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57605 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57605 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57605 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57605 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57605 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:59120 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:59617 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:59687 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63078 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51837 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52425 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53659 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53810 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53810 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53885 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53885 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53885 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53885 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54612 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54612 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54612 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55852 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56391 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56502 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:59382 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:59736 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60074 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61274 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61570 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61691 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61774 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61774 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62539 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62588 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62699 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62844 - "GET /posts/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64888 - "GET /posts/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57287 - "POST /posts/ HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1961, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 944, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "posts_pkey"
+DETAIL:  Key (post_id)=(4) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/uvicorn/protocols/http/httptools_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/starlette/routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/starlette/routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/starlette/routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/starlette/routing.py", line 78, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/starlette/routing.py", line 75, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/fastapi/routing.py", line 302, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/fastapi/routing.py", line 215, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/starlette/concurrency.py", line 38, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/anyio/to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nozomi0407/2025-11-hackathon/app/main.py", line 35, in create_new_post
+    return crud.create_post(db=db, post=post)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nozomi0407/2025-11-hackathon/app/crud.py", line 13, in create_post
+    db.commit()
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2032, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1313, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1288, in _prepare_impl
+    self.session.flush()
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4345, in flush
+    self._flush(objects)
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4480, in _flush
+    with util.safe_reraise():
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4441, in _flush
+    flush_context.execute()
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1413, in execute
+    return meth(
+           ^^^^^
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1635, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1840, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1980, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2349, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1961, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/nozomi0407/.pyenv/versions/3.11.9/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 944, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "posts_pkey"
+DETAIL:  Key (post_id)=(4) already exists.
+
+[SQL: INSERT INTO posts (user_id, name, content, like_count, parm_unluckey, deleted) VALUES (%(user_id)s, %(name)s, %(content)s, %(like_count)s, %(parm_unluckey)s, %(deleted)s) RETURNING posts.post_id, posts.create_date]
+[parameters: {'user_id': None, 'name': 'e2e-test', 'content': '投稿テストです', 'like_count': 0, 'parm_unluckey': 2, 'deleted': False}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:     127.0.0.1:57517 - "POST /posts/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57554 - "GET /posts/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57555 - "PUT /posts/7/like HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57560 - "GET /posts/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57565 - "DELETE /posts/7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57570 - "GET /posts/ HTTP/1.1" 200 OK
