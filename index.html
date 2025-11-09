@@ -1,83 +1,76 @@
 <!DOCTYPE html>
 <html lang="ja">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1">
-		<title>投稿デモ</title>
-		<!-- プロジェクト内の既存ファイルを参照 -->
-		<link rel="stylesheet" href="src/style.css">
-		<script src="assets/script.js" defer></script>
-	</head>
-	<body>
-		<header>
-			<h1>投稿デモ</h1>
-		</header>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1"> 
+        <title>投稿デモ</title>
+        <link rel="stylesheet" href="src/style.css?v=3">
+        <script src="assets/script.js?v=3" defer></script>
+    </head>
+    <body>
+        <header>
+            <h1></h1>
+        </header>
 
-		<main>
-			<section id="posts" aria-live="polite">
-				<!-- 投稿がここに追加されます -->
-			</section>
+        <main>
+            <section id="posts" aria-live="polite">
+                </section>
 
-			<!-- 投稿領域の直下に表示する新規投稿ボタン -->
-			<button id="postButton" aria-label="新しい投稿を追加">＋</button>
-		</main>
+            <button id="postButton" aria-label="新しい投稿を追加">＋</button>
+        </main>
 
-		<!-- 画面右下に表示するリロードボタン -->
-		<button id="reloadButton" aria-label="ページを再読み込み">⟳</button>
+        <button id="reloadButton" aria-label="ページを再読み込み">⟳</button>
 
-		<!-- モーダル（初期状態は非表示） -->
-		<div id="modalOverlay" class="hidden" aria-hidden="true" hidden>
-			<div id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-				<h2 id="modalTitle">New Post</h2>
-				<form id="postForm">
-					<label>
-						ニックネーム
-						<input type="text" id="nickname" name="nickname" maxlength="50" required>
-					</label>
+        <div id="modalOverlay" class="hidden" aria-hidden="true" hidden>
+            <div id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+                <h2 id="modalTitle">New Post</h2>
+                <form id="postForm">
+                    <label>
+                        Name
+                        <input type="text" id="nickname" name="nickname" maxlength="50" required>
+                    </label>
 
-					<label>
-						投稿内容
-						<textarea id="content" name="content" rows="4" required></textarea>
-					</label>
+                    <label>
+                        投稿内容
+                        <textarea id="content" name="content" rows="4" required></textarea>
+                    </label>
 
-					<label>
-						不幸指数（1〜5）
-						<select id="rating" name="rating">
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5" selected>5</option>
-						</select>
-					</label>
+                    <label>
+                        不幸指数
+                        <select id="rating" name="rating">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5" selected>5</option>
+                        </select>
+                    </label>
 
-					<div class="buttons">
+                    <div class="buttons">
                         <button type="button" id="cancelPost">CANCEL</button>
-						<button type="submit" id="submitPost">POST</button>
-					</div>
-				</form>
-			</div>
-		</div>
+                        <button type="submit" id="submitPost">POST</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-		<!-- 投稿表示用ビュー（画像クリックで投稿内容を表示） -->
-		<div id="viewOverlay" class="hidden" aria-hidden="true" hidden>
-			<div id="viewModal" role="dialog" aria-modal="true" aria-labelledby="viewTitle">
-				<h2 id="viewTitle">投稿内容</h2>
-				<div id="viewContent">
-					<p><strong id="viewNick"></strong></p>
-					<p id="viewBodyText"></p>
-					<p>評価: <span id="viewRating"></span></p>
-					<!-- いいね用 UI -->
-					<div class="like-area" style="margin-top:8px;">
-						<button type="button" id="viewLike" aria-label="いいね">❤</button>
-						<span id="viewLikeCount">0</span>
-					</div>
-				</div>
-				<div class="buttons">
-					<button type="button" id="viewClose">閉じる</button>
-				</div>
-			</div>
-		</div>
-		</body>
+        <div id="viewOverlay" class="hidden" aria-hidden="true" hidden>
+            <div id="viewModal" role="dialog" aria-modal="true" aria-labelledby="viewTitle">
+                <div id="viewContent">
+                    <p>Name: <strong id="viewNick"></strong></p>
+                    <p id="viewBodyText"></p>
+                    <p>不幸指数: <span id="viewRating"></span></p>
+                    <div class="like-area" style="margin-top:8px;">
+                        <button type="button" id="viewLike" aria-label="いいね">❤</button>
+                        <span id="viewLikeCount">0</span>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button type="button" id="viewDelete" class="delete-btn">削除</button>
+                    
+                    <button type="button" id="viewClose">閉じる</button>
+                </div>
+            </div>
+        </div>
+        </body>
 </html>
-

@@ -1,5 +1,6 @@
 :root {
-	--overlay-bg: rgba(0,0,0,0.6);
+	/* モーダルオーバーレイ: 黒よりややグレー寄りで不透明度を上げ、背景のコントラストを強める */
+	--overlay-bg: rgba(34,34,34,0.76);
 	--modal-bg: #0f0f0f;
 	--accent: #1366d6;
 	/* メインテキストと枠線に使う明るめの黄色 */
@@ -27,7 +28,11 @@ header {
 	padding-left: 20px; /* タイトルを右へずらしてフレーム内に収める */
 	padding-top: 12px;
 }
-header h1 { margin: 0; }
+header h1
+{
+	margin: 0;
+	text-align: center;
+}
 
 button { cursor: pointer; }
 
@@ -59,6 +64,22 @@ button { cursor: pointer; }
 /* 各投稿ラッパーは #posts 内で絶対配置される */
 .post { position: absolute; }
 .post-image { display:block; max-width:100%; height:auto; border-radius:8px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+
+/* サイズは JavaScript 側で制御するため、ここでは幅の強制を行わない */
+.post-image {
+	/* JS が width を直接設定します。スタイルからの強制幅は無効化しました。 */
+	max-width: none;
+	height: auto !important;
+}
+
+/* 投稿画像下のキャプション（ニックネーム / 評価 / いいね数） */
+.post-caption {
+	/* キャプションはデフォルトで非表示にする（タップ/クリックで表示する必要がある場合は
+	   追加の JS で wrapper に .revealed クラスを付与する等で切り替え可能） */
+	display: none !important;
+}
+.post-caption .post-nick { font-weight: 700; font-size: 13px; }
+.post-caption .post-rating, .post-caption .post-likes { opacity: 0.95; font-size: 12px; }
 
 /* ビュー用モーダルのスタイル */
 #viewOverlay { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.7); z-index: 1200; }
@@ -94,10 +115,12 @@ button { cursor: pointer; }
 	justify-content: center;
 	border: none;
 	box-shadow: 0 6px 18px rgba(0,0,0,0.4);
-	/* #posts の直下にインラインで配置。左に余白を付けてフレーム内に収める */
-	position: static;
-	margin: 12px 0 0 20px;
-	z-index: 1100;
+	/* 固定表示にしてステージ(#posts)より前面に出す */
+	position: fixed;
+	left: 20px;
+	bottom: 88px;
+	z-index: 2000; /* 明示的に大きくして確実に前面へ */
+	pointer-events: auto;
 }
 
 #reloadButton {
@@ -114,10 +137,55 @@ button { cursor: pointer; }
 	justify-content: center;
 	border: none;
 	box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+	/* 左端に移動し、新規投稿ボタンの下に積む（デスクトップでは上に並ぶよう bottom を高めに設定） */
 	position: fixed;
-	right: 24px; /* 右下に表示 */
-	bottom: 24px;
+	left: 24px; /* 左端揃え */
+	bottom: 16px; /* 新規投稿ボタンの下（より底側）に配置） */
 	z-index: 1100;
+}
+
+/* ランキングボタン（右下） */
+#rankingButton {
+	min-width: 64px;
+	height: 48px;
+	border-radius: 24px; /* pill shape for text */
+	background: royalblue; /* 統一して青に */
+	color: #000;
+	font-size: 15px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 12px;
+	border: none;
+	box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+	position: fixed;
+	right: 20px;
+	bottom: 24px;
+	z-index: 2000;
+}
+
+/* Back button style used on ranking.html */
+.back-btn {
+	position: fixed;
+	left: 16px; /* 左上に表示 */
+	top: 12px;
+	z-index: 2100;
+	background: royalblue;
+	color: #000;
+	border: none;
+	padding: 8px 12px;
+	border-radius: 12px;
+	box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+	font-size: 14px;
+}
+
+@media (max-width: 600px) {
+	.back-btn { left: 12px; top: 8px; padding: 6px 10px; font-size: 13px; }
+}
+
+@media (max-width: 600px) {
+	/* モバイルではランキングボタンを小さく表示 */
+	#rankingButton { min-width:56px; height:40px; font-size:14px; right:16px; bottom:16px; padding:0 8px; }
 }
 
 #reloadButton:focus { outline: 3px solid rgba(19,102,214,0.18); }
@@ -133,8 +201,19 @@ button { cursor: pointer; }
 		font-size: 28px;
 		margin-left: 12px;
 	}
-	/* リロードボタンは右下に表示（少し小さめ） */
-	#reloadButton { right: 16px; bottom: 16px; width:56px; height:56px; font-size:28px; }
+	/* リロードボタンは投稿ボタンの下・左端に表示 */
+	#reloadButton {
+		/* モバイルでは投稿ボタンが document-flow に戻るため、リロードは相対位置で左寄せにする */
+		display: block;
+		position: relative;
+		left: auto;
+		right: auto;
+		bottom: auto;
+		margin: 8px 0 0 12px; /* 投稿ボタンの下、左端寄せ */
+		width:56px;
+		height:56px;
+		font-size:28px;
+	}
 
 	/* Mobile-specific adjustments for posts/stage and images */
 	#posts { left: 8px; right: 8px; top: 8px; bottom: 8px; }
@@ -144,8 +223,10 @@ button { cursor: pointer; }
 		height: auto !important;
 		border-radius: 6px;
 	}
-	/* center the post button under the posts area on mobile for easier reach */
-	#postButton { display: block; margin: 12px auto 0; }
+	 /* mobile: center the post button under the posts area for easier reach
+		 -> on small screens we switch back to static/relative positioning so
+		 it appears centered in the document flow. */
+	 #postButton { display: block; position: relative; margin: 12px auto 0; left: auto; bottom: auto; }
 
 	/* make modal controls touch-friendly */
 	#modal {
@@ -172,7 +253,8 @@ button { cursor: pointer; }
 	align-items: center;
 	justify-content: center;
 	background: var(--overlay-bg);
-	z-index: 1000;
+	/* 投稿ボタンより前面に出す（postButton z-index:1100） */
+	z-index: 1300;
 }
 
 #modal {
@@ -218,3 +300,46 @@ body::before {
 	z-index: 1050;
 }
 
+/* Ranking page layout: center the list and give each item a light gray box */
+#rankingRoot { display: flex; flex-direction: column; align-items: center; padding: 20px; }
+#list { width: 100%; max-width: 820px; margin: 12px auto; }
+.rank-item {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	justify-content: center;
+	padding: 12px 16px;
+	margin-bottom: 12px;
+	border-radius: 8px;
+	/* 薄い灰色の枠とわずかな背景で区切る */
+	border: 1px solid rgba(102, 88, 227, 0.1);
+	background: rgb(61, 61, 61);
+}
+.rank-item .rank-num { font-weight:700; width:48px; text-align:center; }
+.rank-item .rank-info { flex: 1; text-align: center; }
+
+/* If a page wants to opt out of the app's fixed, non-scrolling layout
+	 (e.g. ranking.html), add class="ranking" to the <body> element.
+	 This overrides the global body { overflow: hidden } so the page
+	 becomes vertically scrollable and can show all items. */
+body.ranking {
+	height: auto !important;
+	min-height: 100vh;
+	overflow: auto !important;
+	-webkit-overflow-scrolling: touch;
+	padding-bottom: 40px; /* give some breathing room under fixed buttons */
+}
+
+.back-btn {
+	position: fixed;
+	left: 20px; /* 左上に表示 */
+	top: 20px;
+	z-index: 2100;
+	background: royalblue;
+	color: #000;
+	border: none;
+	padding: 8px 12px;
+	border-radius: 12px;
+	box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+	font-size: 14px;
+}

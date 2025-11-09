@@ -12,7 +12,7 @@ class Post(BaseModel):
     post_id: int
     name: str
     content: str
-    like_count: int
+    like_count: Optional[int] = 0
     parm_unluckey: int
     create_date: datetime
     
